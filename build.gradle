@@ -1,0 +1,39 @@
+//Settings for all child projects (as included in settings.gradle)
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+
+    defaultTasks 'build'
+
+    // UTF-8 should be standard by now. So use it!
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+    repositories {
+        mavenCentral()
+    }
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '1.9'
+    }
+
+    // Hide output subfolders from IntelliJ for each subproject
+    idea {
+        module {
+            excludeDirs += file('.idea')
+            excludeDirs += file('target')
+            excludeDirs += file('gradle')
+            excludeDirs += file('out')
+        }
+    }
+}
+
+// Set git as default VCS in IntelliJ
+idea.project.ipr {
+    withXml { provider ->
+        provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+        provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@directory = '$PROJECT_DIR$'
+    }
+}

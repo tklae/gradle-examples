@@ -18,6 +18,7 @@ Collection of common gradle patterns and example projects.
 ## My setup
 Just for completeness, this is what I'm using for these examples:
 * MacBook Pro/OSX Mavericks
+* Git as VCS
 * Java 1.7 for example code
 * Gradle 1.9 (all examples should work with any version >= 1.8)
 * IntelliJ Idea 13 Ultimate (all examples should work with any version >= 11)
