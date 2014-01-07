@@ -1,0 +1,30 @@
+dependencies {
+    testCompile 'junit:junit:4.11'
+}
+
+//Add specific output when executing tests
+//This is by far the recommended way, just the empty lines are a bit annoying:
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "short" //default
+        // set options for log level DEBUG, this will appear when running gradle test -i
+        debug {
+            events "started", "skipped", "failed"
+            exceptionFormat "full"
+        }
+    }
+}
+//If you want to do something very specific:
+//Output before test
+//test{
+//    beforeTest { descriptor ->
+//        logger.lifecycle("Running test: " + descriptor)
+//    }
+//}
+//Output after test
+//test {
+//    afterTest { descriptor, result ->
+//        println "Executed test ${descriptor.className}#${descriptor.name} with result: ${result.resultType}"
+//    }
+//}

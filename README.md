@@ -5,11 +5,12 @@ Collection of common gradle patterns and example projects.
 ## Common tips
 * If you run gradle often, make sure you use *gradle --daemon*. This will run a gradle daemon in the background and not spin up a new java/groovy vm for each gradle command. If you always want to use it, you can also create an alias: `alias gradle='gradle --daemon'`
 *  For committing, I use the following alias: `alias gcommit='git pull --rebase && gradle build && git push'`
+* If you want to force refresh of dependencies, use `gradle refresh-dependencies`
   
 ## Example overview
 1. [How to generate a new project quickly](/generateNewProject/build.gradle)
 2. Simple common setup, see [build.gradle](./build.gradle)
-3. Adding behaviour to certain stages
+3. Adding behaviour to certain stages, for example [extended output when running tests](./testOutput/build.gradle)
 4. Playing around with strict dependency management
 5. Building a small library uploadable to some repository
 6. Multi project setup using [parent build.gradle](./build.gradle) and [settings.gradle](./settings.gradle)
