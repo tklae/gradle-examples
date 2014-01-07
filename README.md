@@ -11,10 +11,10 @@ Collection of common gradle patterns and example projects.
 1. [How to generate a new project quickly](/generateNewProject/build.gradle)
 2. Simple common setup, see [build.gradle](./build.gradle)
 3. Adding behaviour to certain stages, for example [extended output when running tests](./extendedTestOutput/build.gradle)
-4. Playing around with strict dependency management
-5. Building a small library uploadable to some repository
+4. Playing around with strict dependency management (TODO)
+5. Building a small library uploadable to some repository (TODO)
 6. Multi project setup using [parent build.gradle](multiModuleBuildUsingParentBuildFile/build.gradle) and [settings.gradle](multiModuleBuildUsingParentBuildFile/settings.gradle)
-7. Multi project setup using apply-from (if you don't want your projects within one giant git repository)
+7. Multi project setup using apply-from (if you don't want your projects within one giant git repository) (TODO)
 
 ## My setup
 Just for completeness, this is what I'm using for these examples:
