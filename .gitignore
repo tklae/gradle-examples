@@ -1,6 +1,23 @@
+# Java
 *.class
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.ear
+
+# IntelliJ files
+.idea
+*.iml
+*.iws
+*.ipr
+
+# Gradle
+*/build/
+*/out/
+out/
+.gradle/
+
+# osx
+**/*.DS_Store
+.DS_Store
