@@ -1,0 +1,94 @@
+//This is the parent build file. The example is self contained and does not use the main
+//build.gradle file for the whole repository (../build.gradle).
+//This is the setup:
+//
+//We pretend we're in an environment with a backend and a frontend application. Between them,
+//there is some shared source and test code.
+//
+//The dependencies are as follows:
+//Backend depends on Shared, both for source and test code
+//Frontend depends on Shared and Backend
+//
+//This is the folder structure:
+//build.gradle (parent)
+//|-shared (provides shared source and test code)
+//|-backend (a bogus backend)
+//|-frontend (a bogus frontend)
+
+//################################################
+// Nothing special happens here
+//################################################
+//Settings for all child projects (as included in settings.gradle)
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+
+    defaultTasks 'build'
+
+    // UTF-8 should be standard by now. So use it!
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+    repositories {
+        mavenCentral()
+    }
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '1.9'
+    }
+
+    // Hide output subfolders from IntelliJ for each subproject
+    idea {
+        module {
+            excludeDirs += file('.idea')
+            excludeDirs += file('target')
+            excludeDirs += file('gradle')
+            excludeDirs += file('out')
+        }
+    }
+
+    dependencies {
+        testCompile 'junit:junit:4.11'
+    }
+}
+
+// Set git as default VCS in IntelliJ
+idea.project.ipr {
+    withXml { provider ->
+        provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+        provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@directory = '$PROJECT_DIR$'
+    }
+}
+
+//################################################
+// This is where special things start happening
+//################################################
+project(':backend') {
+    dependencies {
+        compile project(':shared')
+        testCompile project(':shared').sourceSets.test.output
+    }
+
+    test {
+        afterTest { descriptor, result ->
+            println "Executed backend test ${descriptor.className}#${descriptor.name} with result: ${result.resultType}"
+        }
+    }
+}
+
+project(':frontend') {
+    dependencies {
+        compile project(':shared')
+        testCompile project(':shared').sourceSets.test.output
+
+        compile project(':backend')
+        testCompile project(':backend').sourceSets.test.output
+    }
+    test {
+        afterTest { descriptor, result ->
+            println "Executed frontend test ${descriptor.className}#${descriptor.name} with result: ${result.resultType}"
+        }
+    }
+}

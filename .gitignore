@@ -13,8 +13,8 @@
 *.ipr
 
 # Gradle
-*/build/
-*/out/
+**/build/
+**/out/
 out/
 .gradle/
 
