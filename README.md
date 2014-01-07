@@ -7,8 +7,8 @@ Collection of common gradle patterns and example projects.
 *  For committing, I use the following alias: `alias gcommit='git pull --rebase && gradle build && git push'`
   
 ## Example overview
-1. How to generate a new project quickly --> /generateNewProject
-2. Simple common setup --> /build.gradle
+1. [How to generate a new project quickly](/generateNewProject)
+2. Simple common setup, see [build.gradle](./build.gradle)
 3. Adding behaviour to certain stages
 4. Playing around with strict dependency management
 5. Building a small library uploadable to some repository
