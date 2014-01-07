@@ -1,0 +1,7 @@
+//Create default gradle directories for java, run with 'gradle create-dirs'
+apply plugin: 'java'
+ 
+task "create-dirs" << {
+   sourceSets*.java.srcDirs*.each { it.mkdirs() }
+   sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}
