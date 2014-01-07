@@ -71,6 +71,7 @@ project(':backend') {
         testCompile project(':shared').sourceSets.test.output
     }
 
+    //Just to show that we can have dedicated messages for different subprojects
     test {
         afterTest { descriptor, result ->
             println "Executed backend test ${descriptor.className}#${descriptor.name} with result: ${result.resultType}"
@@ -86,6 +87,8 @@ project(':frontend') {
         compile project(':backend')
         testCompile project(':backend').sourceSets.test.output
     }
+
+    //Just to show that we can have dedicated messages for different subprojects
     test {
         afterTest { descriptor, result ->
             println "Executed frontend test ${descriptor.className}#${descriptor.name} with result: ${result.resultType}"
