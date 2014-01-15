@@ -1,0 +1,38 @@
+dependencies {
+    testCompile 'junit:junit:4.11'
+}
+
+//Example using the maven-publish plugin. See http://www.gradle.org/docs/current/userguide/publishing_maven.html for more information
+//Run 'gradle publish' to publish
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenCustom(MavenPublication) {
+            groupId 'net.tklae.gradle.examples'
+            artifactId 'best-library-ever'
+            version '1.0'
+
+            pom.withXml {
+                def pomDefinition = asNode()
+                pomDefinition.appendNode('name', 'Best library ever!')
+                pomDefinition.appendNode('description', 'A library everyone should have, provides superb string manipulation functionality.')
+                pomDefinition.appendNode('url', 'https://github.com/tklae/gradle-examples')
+                pomDefinition.appendNode('inceptionYear', '2014')
+
+                def scmFragment = '''
+                <scm>
+                    <url>https://github.com/tklae/gradle-examples</url>
+                    <connection>scm:git://github.com/tklae/gradle-examples</connection>
+                    <developerConnection>scm:git://github.com/tklae/gradle-examples</developerConnection>
+                </scm>'''
+                scmNode = new XmlParser(false, true).parseText(scmFragment)
+                pomDefinition.append(scmNode)
+            }
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal() //Only publish to local maven repository
+    }
+}
