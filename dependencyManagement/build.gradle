@@ -1,0 +1,70 @@
+//This subproject aims at playing around with strict dependency management.
+//By default, gradle takes the newest version of any dependency. Here, we want to play around with overriding
+//this default and exclude those dependencies we do not want to have a cleaner structure.
+//See this link for additional information: http://www.gradle.org/docs/current/userguide/dependency_management.html#sub:version_conflicts
+// or http://www.gradle.org/docs/current/dsl/org.gradle.api.artifacts.ResolutionStrategy.html
+
+
+//Dependency resolution settings
+configurations.all {
+    resolutionStrategy {
+        // fail eagerly on version conflict (includes transitive dependencies)
+        // e.g. multiple different versions of the same dependency (group and name are equal)
+        failOnVersionConflict()
+
+        // force certain versions of dependencies (including transitive)
+        //  *append new forced modules:
+        force   'org.slf4j:slf4j-api:1.7.4',
+                'org.eclipse.jetty:jetty-server:8.1.10.v20130312',
+                'com.sun.jersey:jersey-server:1.17.1',
+                'com.google.guava:guava:14.0.1',
+                'joda-time:joda-time:2.2'
+
+        // add a dependency resolve rule
+        eachDependency { DependencyResolveDetails details ->
+            //specifying a fixed version for all libraries with 'ch.qos.logback' group because both
+            //logback-core and logback-classic are affected
+            if (details.requested.group == 'ch.qos.logback') {
+                details.useVersion '1.0.10'
+            }
+            //specifying a fixed version for all libraries with 'com.fasterxml.jackson.core' group because both
+            //jackson-core and jackson-databind are affected
+            if (details.requested.group == 'com.fasterxml.jackson.core') {
+                details.useVersion '2.1.4'
+            }
+        }
+
+        // cache dynamic versions for 10 minutes
+        cacheDynamicVersionsFor 10*60, 'seconds'
+        // don't cache changing modules at all
+        cacheChangingModulesFor 0, 'seconds'
+    }
+}
+
+// Set our project variables
+project.ext {
+    dropwizardVersion = '0.6.2'
+}
+
+dependencies {
+    compile 'com.yammer.dropwizard:dropwizard-core:'+ dropwizardVersion
+
+    testCompile 'org.hamcrest:hamcrest-all:1.3',
+            'org.mockito:mockito-all:1.9.5',
+            'junit:junit:4.11'
+}
+//These dependencies cause conflicts if not using the resolutionStrategy shown up top:
+//org.slf4j:slf4j-api:1.7.2/1.7.4
+//com.fasterxml.jackson.core:jackson-databind:2.1.1/2.1.2/2.1.4
+//com.fasterxml.jackson.core:jackson-core:2.1.4/2.1.2
+//org.eclipse.jetty:jetty-server:8.1.10.v20130312 vs 8.1.8.v20121106
+//ch.qos.logback:logback-core:1.0.10/1.0.7
+//ch.qos.logback:logback-classic:1.0.10/1.0.7
+//com.sun.jersey:jersey-server:1.17.1/1.15
+//com.google.guava:guava:14.0.1/11.0.2
+//joda-time:joda-time:2.2/2.1
+
+//List all the jars
+task listJars << {
+    configurations.compile.each { File file -> println file.name }
+}

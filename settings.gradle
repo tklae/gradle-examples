@@ -1,1 +1,1 @@
-include 'generateNewProject', 'extendedTestOutput'
+include 'generateNewProject', 'extendedTestOutput', 'dependencyManagement'
