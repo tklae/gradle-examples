@@ -1,0 +1,3 @@
+apply from: '../base.gradle'
+apply from: '../idea.gradle' //Gradle gets confused with the path - if you included this in the base.gradle it would still look for it in /shared/idea.gradle
+apply from: '../commonDependencies.gradle'

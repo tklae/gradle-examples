@@ -1,0 +1,19 @@
+apply plugin: 'idea'
+
+// Hide output subfolders from IntelliJ for each subproject
+idea {
+    module {
+        excludeDirs += file('.idea')
+        excludeDirs += file('target')
+        excludeDirs += file('gradle')
+        excludeDirs += file('out')
+    }
+}
+
+// Set git as default VCS in IntelliJ
+idea.project.ipr {
+    withXml { provider ->
+        provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+        provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@directory = '$PROJECT_DIR$'
+    }
+}

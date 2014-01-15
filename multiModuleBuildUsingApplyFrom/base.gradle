@@ -1,0 +1,22 @@
+//This is the included build file. The example is self contained and does not use the main
+//build.gradle file for the whole repository (../build.gradle).
+//This is the setup:
+//
+//Note that when using 'apply from' you cannot set up any direct dependencies
+
+//################################################
+// Nothing special happens here
+//################################################
+apply plugin: 'java'
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
+defaultTasks 'build'
+
+// UTF-8 should be standard by now. So use it!
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.9'
+}
