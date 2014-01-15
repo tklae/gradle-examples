@@ -14,13 +14,11 @@ Collection of common gradle patterns and example projects.
 4. Playing around with strict dependency management (TODO)
 5. Building a small library uploadable to some repository (TODO)
 6. Multi project setup using [parent build.gradle](multiModuleBuildUsingParentBuildFile/build.gradle) and [settings.gradle](multiModuleBuildUsingParentBuildFile/settings.gradle)
-7. Including shared fragments using apply-from (if you don't want your projects within one giant git repository)
+7. Including shared fragments using apply-from (if you don't want your projects within one giant git repository). Note that dependencies other than those defined via a central repository do not work this way.
     Useful links are
     * [here](http://www.gradle.org/docs/current/userguide/tutorial_this_and_that.html),
     * [here](https://stackoverflow.com/questions/18715137/extract-common-methods-from-gradle-build-script) and
     * [here](http://forums.gradle.org/gradle/topics/usage_of_apply_from_in_buildscript_scope).
-    Note that dependencies other than those defined via a central repository do not work this way.
-
 
 ## My setup
 Just for completeness, this is what I'm using for these examples:
